@@ -1,12 +1,12 @@
 import { uiActions } from "./ui-slice";
 import { cartActions } from "./cart-slice";
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 export const fetchCartData = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://foodorder-addingforms-default-rtdb.firebaseio.com/cart.json"
-      );
+      const response = await fetch(`https:${API_KEY}`);
 
       if (!response.ok) {
         throw new Error("cant fetch data");
@@ -42,10 +42,10 @@ export const sendCartData = (cart) => {
     );
 
     const sendRequest = async () => {
-      const response = await fetch(
-        "https://foodorder-addingforms-default-rtdb.firebaseio.com/cart.json",
-        { method: "PUT", body: JSON.stringify(cart) }
-      );
+      const response = await fetch(`https:${API_KEY}`, {
+        method: "PUT",
+        body: JSON.stringify(cart),
+      });
       if (!response.ok) {
         throw new Error("sending cart data failed");
       }
